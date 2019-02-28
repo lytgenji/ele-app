@@ -1,18 +1,67 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="home">
+        <div class="header">
+            <div class="address-map" @click="$router.push({name: 'address',params: {city: city}})">
+                <i class="fa fa-map-marker"></i>
+                <span>{{address}}</span>
+                <i class="fa fa-sort-desc"></i>
+            </div>
+            <div class="shop-search">
+                <i class="fa fa-search">
+                    搜索商家 商家名称
+                </i>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: "home",
+        computed: {
+            address() {
+                return this.$store.getters.address
+            },
+            city() {
+                return this.$store.getters.location.addressComponent.city ||
+                    this.$store.getters.location.addressComponent.province
+            }
+        }
+    }
 </script>
+
+<style scoped>
+    .home {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        box-sizing: border-box;
+    }
+    .header {
+        background-color: #009eef;
+        padding: 16px;
+    }
+    .header .address-map {
+        color: #fff;
+        font-weight: bold;
+    }
+    .address-map i {
+        margin: 0 3px;
+        font-size: 18px;
+    }
+    .address-map span {
+        display: inline-block;
+        width: 80%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .header .shop-search {
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 10px 0;
+        border-radius: 4px;
+        text-align: center;
+        color: #aaa;
+    }
+</style>
